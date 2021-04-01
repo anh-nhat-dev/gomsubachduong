@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layout/head', { title: 'Danh mục sản phẩm'}) %>
+  </head>
+  <body class="c-app">
+     <%- include('../layout/side-bar') %>
+      <%# Header %>
+      <%- include('../layout/header') %>
+        <main class="c-main">
+          <div class="container-fluid">
+            <div class="fade-in">
+                <div class="row">
+                    <div class="col-md-6  col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><span>Thêm mới danh mục</span></h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="/panel/categories/create" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="name"><strong>Tên danh mục</strong> <span  class="text-danger">*</span></label>
+                                        <input required class="form-control" value="" id="name" name="name" type="text" placeholder="Nhập tên danh mục">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name"><strong>Danh mục cha</strong></label>
+                                        <select class="form-control" id="parent_id" name="parent_id">
+                                            <option value="">Trống</option>
+                                            <% for (const cate of categories) { %>
+                                                <option value="<%= cate._id %>"><%= cate.name %></option>
+                                            <% } %>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company"><strong>Mô tả</strong></label>
+                                        <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company"><strong>Ảnh nền</strong></label>
+                                        <input type="file" name="background" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company"><strong>Icon</strong></label>
+                                        <input type="file" name="icon" />
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="company"><strong>Banner</strong></label>
+                                        <input type="file" name="banner" />
+                                    </div>
+                                    <div class="text-center">
+                                         <button class="btn btn-info" type="submit" value="save" name="submit"> 
+                                            Tạo mới
+                                        </button>
+                                        <button class="btn btn-success" name="submit" value="apply" type="submit">
+                                            Tạo mới và Sửa 
+                                        </button>
+                                    </div>
+                                    
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><span>Danh sách danh mục</span></h4>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-responsive-sm table-hover table-outline mb-0">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th>Tên danh mục</th>
+                                            <th class="text-center">Hành động</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%  for (const c of categories) { %>
+                                            <tr>
+                                                <td>
+                                                    <img src="<%= c.icon.url %>" width="50" heigth="50"/>
+                                                    <span><b><%= c.name %></b></span>
+                                                </td>
+                                                <td class="text-center">
+                                                    <a href="/panel/categories/<%= c._id %>/edit">
+                                                        <button class="btn btn-sm btn-primary" type="button">
+                                                            <svg class="c-icon">
+                                                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-pencil"></use>
+                                                            </svg>
+                                                        </button>
+                                                    </a>
+                                                    <a data-target="delete" href="/panel/categories/<%= c._id %>/delete">
+                                                        <button class="btn btn-sm btn-danger" type="button">
+                                                            <svg class="c-icon">
+                                                                <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-x"></use>
+                                                            </svg>
+                                                        </button>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </main>
+      <%# Footer %>
+    <%- include('../layout/foot') %>
+     <script>
+
+    $("[data-target=delete]").on("click", function(e){
+    console.log("🚀 ~ file: index.ejs ~ line 97 ~ $ ~ e", e)
+      
+        e.preventDefault();
+        const notice = PNotify.error({
+            title: 'Xác nhận xóa',
+            text: 'Bạn muốn xóa danh mục này',
+            hide: false,
+            closer: false,
+            sticker: false,
+            destroy: false,
+            stack: new PNotify.Stack({
+              modal: true,
+              firstpos1: 25,
+              overlayClose: false
+            }),
+            modules: new Map([
+              ...PNotify.defaultModules,
+              [PNotifyConfirm, {
+                confirm: true
+              }]
+            ])
+          });
+
+        const url  = $(this).attr('href')
+        notice.on('pnotify:confirm', () => window.location = url);
+    })
+      
+    </script>
+  </body>
+</html>

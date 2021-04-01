@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layout/head', { title: 'Danh sách đơn hàng'}) %>
+  </head>
+  <body class="c-app">
+     <%- include('../layout/side-bar') %>
+      <%# Header %>
+      <%- include('../layout/header') %>
+        <main class="c-main">
+          <div class="container-fluid">
+            <div class="fade-in">
+               <div class="card">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between">
+                    <h4 class="card-title mb-0">Danh sách sản phẩm</h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-responsive-sm table-hover table-outline mb-0">
+                        <thead class="thead-light">
+                          <tr>
+                            <th></th>
+                            <th>
+                              Thông tin khác hàng
+                            </th>
+                            <th>Ghi chú đơn hàng</th>
+                            <th class="text-center">Tổng tiền</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <%  for (const o of orders) { %>
+                            <tr >
+                                <td style="width:5%" >
+                                    <button class="btn btn-sm" type="button" data-toggle="collapse" data-target="#toggle-<%=o._id%>" class="accordion-toggle">
+                                        <svg class="c-icon">
+                                            <use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-plus"></use>
+                                        </svg>
+                                    </button>
+                                </td>
+                                <td>
+                                    Họ & tên: <span><b><%= o.full_name %></b></span>
+                                    <br />
+                                    Số điện thoại: <span><b><%= o.phone %></b></span>
+                                    <br />
+                                    Email: <span><b><%= o.email %></b></span>
+                                    <br />
+                                    Địa chi: <span><b><%= o.address %></b></span>
+                                </td>
+                                <td>
+                                    <%= o.note %>
+                                </td>
+                                <td class="text-center">
+                                    <p><span><b><%- include("../components/format-price", {number: o.items.reduce((a,c) => a + c.qty * c.price, 0)}) %></b></span></p>
+                                </td>
+                                <td>
+                                <p>
+                                    <%- o.status === "new" ? `<span class="badge badge-pill badge-primary" width="5" height="5">&nbsp;</span> Đơn hàng mới` : "" %>
+                                    <%- o.status === "confirmed" ? `<span class="badge badge-pill badge-info" width="5" height="5">&nbsp;</span> Đã xác nhận` : ""%>
+                                    <%- o.status === "success" ? `<span class="badge badge-pill badge-success" width="5" height="5">&nbsp;</span> Thanh toán thành công` : "" %>
+                                    <%- o.status === "cancel" ? `<span class="badge badge-pill badge-danger" width="5" height="5">&nbsp;</span> Hủy bỏ`: "" %>
+                                </p>
+                                </td>
+                                <td style="width:20%">
+                                    <form method="post" action="/panel/orders/<%= o._id %>/edit">
+                                        <% if (o.status !== "success" && o.status !== "cancel") { %>
+                                            <select class="form-control" name="status">
+                                                <option disabled value="new" <%= o.status === "new" && "selected" %>>Đơn hàng mới</options>
+                                                <option value="confirmed" <%= o.status === "confirmed" && "selected" %>>Đã xác nhận</options>
+                                                <option value="success" <%= o.status === "success" && "selected" %>>Thanh toán thành công</options>
+                                                <option value="cancel">Hủy bỏ</options>
+                                            </select>
+                                            <input type="hidden" name="page" value="<%= page %>">
+                                        <% } %>
+                                    </form>
+                                </td>
+                          </tr>
+                          <tr>
+                            <td colspan="12" style="padding:0;border:0;">
+                            <div class="accordian-body collapse" id="toggle-<%=o._id%>"> 
+                                <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Mã sản phẩm</th>
+                                        <th class="text-center">Đơn giá</th>
+                                        <th class="text-center">Thành tiền</th>
+                                        <th class="text-center">Số lượng </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <% for (const {product: p, qty, price} of o.items) { %>
+                                        <tr>
+                                            <td>
+                                                <img src="<%= p.thumbnail.url %>" width="30" heigth="30"/><span> <b><%= p.title %></b></span>
+                                            </td>
+                                            <td>
+                                                <span><%= p.code %></span>
+                                            </td>
+                                            <td class="text-center"><p><span><b><%- include("../components/format-price", {number: price}) %></b></span></p>
+                                            </td>
+                                            <td class="text-center"><p><span><b><%- include("../components/format-price", {number: qty * price}) %></b></span></p>
+                                            <td class="text-center">
+                                                <b><%= qty %></b>
+                                            </td>
+                                        </tr>
+                                    <% } %>
+                                </tbody>
+                            </table>
+                            </div>
+                            </td>
+                          </tr>
+                        <% } %>
+                        </tbody>
+                      </table>
+                </div>
+                <div class="card-footer">
+                    <nav aria-label="Page navigation example">
+                    <ul class="pagination pagination-sm justify-content-end">
+                        <li class="page-item <%=  (page > 1)  ? '' : 'disabled' %>">
+                            <a class="page-link" href="/panel/products?page=<%= page - 1 %>">&laquo;</a>
+                        </li>
+                        <% pages.forEach((i) => { %>
+                        <li class="page-item <%= page === i ? "active":"" %>">
+                            <%- (i !== "...") ? `<a class="page-link" href="/panel/products?page=${i}">${i}</a>`: `<span class="page-link">${i}</span>` %>
+                        </li>
+                        <% }) %>
+                        <li class="page-item <%=  (page < totalPage) ? '' : 'disabled' %>">
+                            <a class="page-link" href="/admin/products?page=<%= page + 1 %>">&raquo;</a>
+                        </li>
+                    </ul>
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      <%# Footer %>
+    <%- include('../layout/foot') %>
+
+    <script>
+    $("[data-target=delete]").on("click", function(e){
+        e.preventDefault();
+        const notice = PNotify.error({
+            title: 'Xác nhận xóa',
+            text: 'Bạn muốn xóa sản phẩm này',
+            hide: false,
+            closer: false,
+            sticker: false,
+            destroy: false,
+            stack: new PNotify.Stack({
+              modal: true,
+              firstpos1: 25,
+              overlayClose: false
+            }),
+            modules: new Map([
+              ...PNotify.defaultModules,
+              [PNotifyConfirm, {
+                confirm: true
+              }]
+            ])
+          });
+        const url  = $(this).attr('href')
+        notice.on('pnotify:confirm', () => window.location = url);
+    })
+
+    $("[name=status]").on("change", function(e){
+        $(this).parent().submit()
+    });
+
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,23 @@
+
+<script src="https://cdn.jsdelivr.net/npm/@pnotify/core@5.2.0/dist/PNotify.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@pnotify/confirm@5.2.0/dist/PNotifyConfirm.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pnotify/core@5.2.0/dist/PNotify.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@pnotify/core@5.2.0/dist/BrightTheme.css">
+
+
+<script>
+    const noti = JSON.parse('<%- JSON.stringify(flash) %>');
+    if (noti.error) {
+        PNotify.error({
+            title: 'Lỗi',
+            text: noti.error,
+        });
+    }
+    if (noti.success) {
+        PNotify.success({
+            title: 'Thành công',
+            text: noti.success,
+        });
+    }
+
+</script>

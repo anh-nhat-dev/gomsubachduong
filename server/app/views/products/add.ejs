@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('../layout/head', { title: 'Thêm mới sản phẩm'}) %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.7.6/dist/min/dropzone.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.7.6/dist/min/basic.min.css">
+    <style>
+        #thumbnail {
+            display: none;
+        }
+        .thumbanil-preview {
+            height: 150px;
+            width: 150px;
+            overflow: hidden;
+        }
+        .dropzone {
+            border: 2px dashed #ebebeb;
+            background-color: #fcfdfe;
+        }
+        .dropzone .dz-preview .dz-progress {
+            display: none;
+        }
+
+        .dropzone .dz-preview .dz-remove {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            top: -6px;
+            right: -7px;
+            z-index: 9999;
+            background: #fff;
+            border-radius: 50%;
+            color: red;
+            font-weight: 900;
+        }
+
+         .dropzone .dz-preview .dz-details {
+            display: none;
+        }
+        
+    </style>
+
+  </head>
+  <body class="c-app">
+     <%- include('../layout/side-bar') %>
+      <%# Header %>
+      <%- include('../layout/header') %>
+        <main class="c-main">
+          <div class="container-fluid">
+            <div class="fade-in">
+                <form method="post" enctype="multipart/form-data">
+                    <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Thông tin chi tiết</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-md-8">
+                                        <label for="company"><strong>Tên sản phẩm</strong> <span  class="text-danger">*</span></label>
+                                        <input required class="form-control" id="title" name="title" type="text" placeholder="Nhập tên sản phẩm">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="company"><strong>Mã sản phẩm</strong> <span  class="text-danger">*</span></label>
+                                        <input required class="form-control" id="code" name="code"  type="text" placeholder="Nhập mã sản phẩm">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="company"><strong>Giá sản phẩm</strong></label>
+                                        <div class="input-group">
+                                            <input class="form-control number-separator" type="text" ref="price_original" value="0" placeholder="Nhập giá sản phẩm">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    VND
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="price_original" id="price_original"  name="price_original" value="0" />
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="company"><strong>Giá khuyến mãi </strong></label>
+                                        <div class="input-group">
+                                            <input class="form-control number-separator" value="0" ref="price_discount" type="text" placeholder="Nhập giá khuyến mãi">
+                                            <div class="input-group-append">
+                                                <span class="input-group-text">
+                                                    VND
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" name="price_discount" id="price_discount"  value="0" name="price_discount" />
+                                    </div>
+                                     <div class="col-md-6 mt-1">
+                                        <div class="form-check form-check-inline mr-1">
+                                            <input class="form-check-input" id="price_negotiable" name="price_negotiable" type="checkbox">
+                                            <label class="col-form-label" for="price_negotiable"><strong>Giá thương lượng</strong></label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="company"><strong>Bảo hành</strong> </label>
+                                        <input  class="form-control" id="warranty" name="warranty" type="text" placeholder="Bảo hành">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="company"><strong>Khuyến mãi</strong></label>
+                                        <input  class="form-control" id="promotion" name="promotion"  type="text" placeholder="Khuyến mãi">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <label class="col-form-label"><strong>Tình trạng</strong></label>
+                                        <div class="col-form-label">
+                                            <div class="form-check form-check-inline mr-5">
+                                                <input class="form-check-input" checked id="stocking" name="stock" type="radio" value="stocking">
+                                                <label class="form-check-label" for="stocking">Còn hàng</label>
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <input class="form-check-input" id="out_of_stock" name="stock" type="radio" value="out_of_stock">
+                                                <label class="form-check-label" for="out_of_stock">Hết hàng</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 ">
+                                        <div class="form-check form-check-inline mr-1">
+                                            <input class="form-check-input" id="is_selling" name="is_selling" type="checkbox" >
+                                            <label class="col-form-label" for="is_selling"><strong>Sản phẩm bán chạy</strong></label>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-check form-check-inline mr-1">
+                                            <input class="form-check-input" id="is_new" name="is_new" type="checkbox" >
+                                            <label class="col-form-label" for="is_new"><strong>Sản phẩm mới</strong></label>
+                                        </div>
+                                    </div>
+                                </div> 
+                                <div class="form-group">
+                                    <label for="company"><strong>Ghi chú</strong></label>
+                                    <textarea class="form-control" id="note"  name="note" rows="3"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="company"><strong>Mô tả sản phẩm</strong></label>
+                                    <textarea class="form-control" id="description" name="description" rows="9"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><span>Gallery images</span></h4>
+                            </div>
+                            <div class="card-body">
+                                <div id="gallery-image" class="dropzone">
+
+                                </div>
+                                <input type="file" multiple="multiple" id="photos" name="photos" style="display: none" />
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><span>Thuộc tính sản phẩm</span> <button ref="add-attribute" class="btn btn-success"> + </button></h4>
+                                
+                            </div>
+                            <div class="card-body" id="attributes">
+                                
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Xuất bản</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="status">Trạng thái </label>
+                                    <select name="status" id="status" class="form-control" id="">
+                                        <option value="draft">Nháp</option>
+                                        <option value="publish">Xuất bản</option>
+                                    </select>
+                                </div>
+                                <div class="text-center">
+                                    <button class="btn btn-info" type="submit" value="save" name="submit"> 
+                                        Lưu
+                                    </button>
+                                    <button class="btn btn-success" name="submit" value="apply" type="submit">
+                                        Lưu và Sửa 
+                                    </button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Danh mục sản phẩm</h4>
+                            </div>
+                            <div class="card-body">
+                                <select class="form-control" id="cate_id" name="cate_id">
+                                    <% for (const cate of categories) { %>
+                                        <option value="<%= cate._id %>"><%= cate.name %></option>
+                                    <% } %>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Ảnh đại diện sản phẩm</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <input type="file" name="thumbnail" id="thumbnail" />
+                                    <div class="thumbanil-preview">
+                                        <img id="thumbanil-preview" class="img-fluid" src="img/selection_copy-512.png" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Video sản phẩm</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="youtube_video_id">ID youtube </label>
+                                    <input type="text" name="youtube_video_id" id="youtube_video_id" class="form-control">
+                                </div>
+                                <div class="text-center">
+                                    <div id="preview_video_id">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <h4>Tags</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <input type="text" name="tags" id="tags" class="form-control">
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </main>
+      <%# Footer %>
+    <%- include('../layout/foot') %>
+    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.7.6/dist/min/dropzone.min.js"></script>
+    <script src="https://cdn.tiny.cloud/1/8lox9bfirl0iv8tfeh3lbgzcvgut0wso51sl8k93m0d61v9j/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+    tinymce.init({
+      selector: 'textarea#description',
+      height: 500,
+      plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+      toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+      toolbar_mode: 'floating',
+      tinycomments_mode: 'embedded',
+      tinycomments_author: 'Cao Anh Nhất',
+   });
+    </script>
+    <script>
+
+    $(".number-separator").on("input", (e) => {
+
+        const check = /^[0-9.,]+$/.test(e.target.value)
+        e.target.value = check ? parseFloat(
+                e.target.value.replace(/,/g, '')
+            ).toLocaleString('en') : e.target.value.substring(0, e.target.value.length - 1);
+        
+        const ref = $(e.target).attr('ref');
+        if (ref) {
+            $(`#${ref}`).val(e.target.value.replace(/\,/g, ""))
+        }
+    });
+
+    $("#thumbanil-preview").on("click", function(){
+        $("#thumbnail").click()
+    })
+
+    $("#thumbnail").on("change", function(e){
+        const self = $(e.target).get(0)
+        const file = self.files[0]
+       if (file && ["image/png", "image/jpeg"].includes(file.type)) {
+
+            const reader = new FileReader();
+            reader.onload = function(){
+                $("#thumbanil-preview").attr("src", reader.result);
+            }
+            reader.readAsDataURL(file);
+
+       }
+    })
+
+
+    Dropzone.autoDiscover = false;
+    const galleryImage= new Dropzone("div#gallery-image", { 
+        url: "/",
+        acceptedFiles: "image/*", 
+        filesizeBase: 1024,
+        maxFilesize: 5,
+        maxFiles: 8, 
+        autoProcessQueue: false, 
+        addRemoveLinks: true,
+        dictRemoveFile: `<svg class="c-icon"><use xlink:href="vendors/@coreui/icons/svg/free.svg#cil-x-circle"></use></svg>`
+        
+    }); 
+
+
+    $("form").on("submit", function(e){
+        const b = new DataTransfer();
+        const files  = galleryImage.files || [];
+        for (const file  of files) {
+            if (file.status === "queued") {
+                b.items.add(file)
+            }
+        }
+        $(e.target).find("#photos").get(0).files = b.files;
+    });
+
+    $("#youtube_video_id").on("blur", function(){
+        const val = $(this).val();
+        $("#preview_video_id").html(val ? `<iframe  src="https://www.youtube.com/embed/${val}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>` : "")
+    })
+
+    $(document).ready(function(){
+        $("[ref=add-attribute]").click((e) => {
+            e.preventDefault();
+            $("#attributes").append(`
+                <div class="form-group row">
+                    <div class="col-5">
+                        <label><strong>Tên thuộc tính</strong></label>
+                        <input class="form-control" name="attributes[names][]" />
+                    </div>
+                    <div class="col-5">
+                        <label><strong>Giá trị</strong></label>
+                        <input class="form-control" name="attributes[values][]" />
+                    </div>
+                    <div class="col-2">
+                        <label></label>
+                        <input type="button" ref="delete-attribute" class="btn btn-danger" value="x">
+                    </div>
+                </div>
+            `)
+        });
+    });
+
+    $(document).on('click', '[ref=delete-attribute]',  function(e){
+        e.preventDefault();
+        const self = $(this);
+        
+        self.parents(".form-group.row").remove();
+    })
+
+
+  </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+body {
+  margin: 0;
+ font-family: "Roboto",sans-serif;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.rc-menu-submenu-popup {
+  z-index: 9999;
+}
+
+.rc-menu-item-active, .rc-menu-submenu-active > .rc-menu-submenu-title {
+  background-color: transparent !important;
+}
+
+.rc-menu-submenu-selected {
+  background-color: transparent !important;
+}
+.container {
+  max-width: 1200px;
+}

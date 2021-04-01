@@ -1,0 +1,98 @@
+  <div className="col-12 col-md-3 map">
+            <div className="title">Bản đồ</div>
+            <a
+              href="https://www.google.com/maps/place/G%E1%BB%91m+S%E1%BB%A9+B%E1%BA%A3o+Kh%C3%A1nh+-+B%C3%A1t+Tr%C3%A0ng/@20.9734985,105.9121485,18z/data=!4m5!3m4!1s0x3135afe7a0c213c5:0xd21193bac9a85cad!8m2!3d20.9736375!4d105.9131284"
+              target="_blank"
+            >
+              <img
+                src="https://gomsubaokhanh.vn/template/default/images/maps_footer.jpg"
+                alt="bản đồ"
+              />
+            </a>
+          </div>
+          <div className="col-12">
+            <div id="footer-social">
+              <a
+                href="http://online.gov.vn/HomePage/CustomWebsiteDisplay.aspx?DocId=45357"
+                target="_blank"
+                title="Đã đăng ký bộ công thương"
+                style={{
+                  maxWidth: 250,
+                  width: "auto",
+                  position: "absolute",
+                  right: 0,
+                  right: 18,
+                  top: -41,
+                }}
+              >
+                <img
+                  className="lazy"
+                  src="https://gomsubaokhanh.vn/template/default/images/bct.png"
+                  data-original="https://gomsubaokhanh.vn/template/default/images/bct.png"
+                  alt
+                  style={{ display: "inline" }}
+                />
+              </a>
+              {/* <a href="//www.dmca.com/Protection/Status.aspx?ID=00eef554-a847-4efd-87d4-810396a9d48f" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w250-5x1-10.png?ID=00eef554-a847-4efd-87d4-810396a9d48f"  alt="DMCA.com Protection Status" /></a>   */}
+              <a
+                href="https://www.facebook.com/gomsubaokhanh/"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/fb_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+              <a
+                href="https://www.youtube.com/channel/UC4HFy73EyfpiZn0moEtGP6Q"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/youtube_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+              <a
+                href="https://tiki.vn/cua-hang/gom-bat-trangg"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/tiki_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+              <a
+                href="https://www.lazada.vn/shop/gom-su-bao-khanh-bat-trang-/?spm=a2o4n.pdp.seller.1.11253dfcNOn6P5&itemId=279152203&channelSource=pdp"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/lazada_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+              <a
+                href="https://www.sendo.vn/shop/gom-su-bao-khanh-bat-trang"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/sendo_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+              <a
+                href="https://shopee.vn/gomsubaokhanh"
+                target="_blank"
+                rel="”nofollow”"
+              >
+                <img
+                  src="https://gomsubaokhanh.vn/template/default/images/shoppe_icon_social_new.png"
+                  alt="social"
+                />
+              </a>
+            </div>
+          </div>
