@@ -14,3 +14,10 @@ export const device = {
   laptop: `(max-width: ${size.laptop}) and (min-width: ${size.tablet})`,
   desktop: `(min-width: ${size.desktop})`,
 };
+
+export const sizesImage = {
+  small: "small",
+  thumbnail: "thumbnail",
+  large: "large",
+  full: "full",
+};

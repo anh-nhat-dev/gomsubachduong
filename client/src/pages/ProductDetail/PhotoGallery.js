@@ -38,12 +38,12 @@ const PhotoGallery = ({ photos = [] }) => {
       },
       largeImage: {
         src: source.large,
-        width: 1426,
-        height: 2000,
+        width: 1200,
+        height: 1800,
       },
-      // lensStyle: { backgroundColor: "rgba(0,0,0,.6)" },
+      lensStyle: { backgroundColor: "rgba(0,0,0,.6)" },
       // isHintEnabled: true,
-      // shouldHideHintAfterFirstActivation: false,
+      shouldHideHintAfterFirstActivation: false,
       // enlargedImagePosition: "over",
       enlargedImagePortalId: "portal",
       enlargedImageContainerDimensions: {

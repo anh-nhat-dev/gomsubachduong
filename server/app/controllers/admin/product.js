@@ -6,8 +6,8 @@ const config = require("config");
 
 const paginate = require("../../../common/paginate");
 const {
-  removeFileProduct,
-  uploadFileProduct,
+  removeImageResize,
+  uploadImageResize,
   getCategoriesByLevel,
 } = require("../../../helpers");
 
@@ -186,26 +186,24 @@ exports.store = async (req, res, next) => {
     });
 
     if (thumbnail) {
-      const filename = uploadFileProduct(
+      const _thumbnail = await uploadImageResize(
         thumbnail.path,
         slugName,
         thumbnail.originalname
       );
-      product.set("thumbnail", {
-        filename: filename,
-      });
+      product.set("thumbnail", _thumbnail);
     }
 
     if (photos) {
       const _photos = [];
       for (const photo of photos) {
-        const filename = uploadFileProduct(
+        const _photo = await uploadImageResize(
           photo.path,
           slugName,
           photo.originalname
         );
 
-        _photos.push({ filename: filename });
+        _photos.push(_photo);
       }
       product.set("photos", _photos);
     }
@@ -329,30 +327,30 @@ exports.update = async (req, res, next) => {
 
     // Upload thumbnail
     if (thumbnail) {
-      const filename = uploadFileProduct(
+      const _thumbnail = await uploadImageResize(
         thumbnail.path,
         slugName,
         thumbnail.originalname
       );
+      console.log(_thumbnail);
+      _product.$set.thumbnail = _thumbnail;
 
-      _product.$set.thumbnail = {
-        filename,
-      };
-
-      removeFileProduct(product.thumbnail.filename);
+      removeImageResize(product.thumbnail);
     }
 
     // Upload photos
     if (photos) {
       const _photos = [];
+
       for (const photo of photos) {
-        const filename = uploadFileProduct(
+        const _photo = await uploadImageResize(
           photo.path,
           slugName,
           photo.originalname
         );
-        _photos.push({ filename: filename });
+        _photos.push(_photo);
       }
+
       _product.$push.photos = { $each: _photos };
     }
 
@@ -372,7 +370,7 @@ exports.update = async (req, res, next) => {
       product.photos
         .filter((photo) => delete_photos_ids.includes(String(photo._id)))
         .forEach((photo) => {
-          removeFileProduct(photo.filename);
+          removeImageResize(photo);
         });
     }
 

@@ -32,16 +32,60 @@ const ProductSchema = new mongoose.Schema(
     },
     thumbnail: {
       id: false,
-      filename: {
-        type: String,
-        default: null,
+      full: {
+        filename: {
+          type: String,
+          default: null,
+        },
+      },
+      thumbnail: {
+        filename: {
+          type: String,
+          default: null,
+        },
+      },
+      small: {
+        filename: {
+          type: String,
+          default: null,
+        },
+      },
+      large: {
+        filename: {
+          type: String,
+          default: null,
+        },
       },
     },
     photos: [
       {
-        filename: {
-          type: String,
-          default: null,
+        full: {
+          id: false,
+          filename: {
+            type: String,
+            default: null,
+          },
+        },
+        thumbnail: {
+          id: false,
+          filename: {
+            type: String,
+            default: null,
+          },
+        },
+        small: {
+          id: false,
+          filename: {
+            type: String,
+            default: null,
+          },
+        },
+        large: {
+          id: false,
+          filename: {
+            type: String,
+            default: null,
+          },
         },
       },
     ],
@@ -117,7 +161,23 @@ const ProductSchema = new mongoose.Schema(
 );
 
 ProductSchema.virtual("thumbnail.url").get(function () {
-  return getFullUrlMediaUpload(this.thumbnail.filename);
+  return getFullUrlMediaUpload(this.thumbnail.thumbnail.filename);
+});
+
+ProductSchema.virtual("thumbnail.thumbnail.url").get(function () {
+  return getFullUrlMediaUpload(this.thumbnail.thumbnail.filename);
+});
+
+ProductSchema.virtual("thumbnail.full.url").get(function () {
+  return getFullUrlMediaUpload(this.thumbnail.full.filename);
+});
+
+ProductSchema.virtual("thumbnail.small.url").get(function () {
+  return getFullUrlMediaUpload(this.thumbnail.small.filename);
+});
+
+ProductSchema.virtual("thumbnail.large.url").get(function () {
+  return getFullUrlMediaUpload(this.thumbnail.large.filename);
 });
 
 ProductSchema.virtual("is_discount").get(function () {
@@ -137,7 +197,19 @@ ProductSchema.virtual("price").get(function () {
 });
 
 ProductSchema.paths.photos.schema.virtual("url").get(function () {
-  return getFullUrlMediaUpload(this.filename);
+  return getFullUrlMediaUpload(this.thumbnail.filename);
+});
+ProductSchema.paths.photos.schema.virtual("thumbnail.url").get(function () {
+  return getFullUrlMediaUpload(this.thumbnail.filename);
+});
+ProductSchema.paths.photos.schema.virtual("large.url").get(function () {
+  return getFullUrlMediaUpload(this.large.filename);
+});
+ProductSchema.paths.photos.schema.virtual("full.url").get(function () {
+  return getFullUrlMediaUpload(this.full.filename);
+});
+ProductSchema.paths.photos.schema.virtual("small.url").get(function () {
+  return getFullUrlMediaUpload(this.small.filename);
 });
 
 ProductSchema.paths.photos.schema.set("toJSON", {

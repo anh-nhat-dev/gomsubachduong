@@ -23,6 +23,7 @@ module.exports = {
     temp_dir: path.resolve("server/storage/temp"),
     static_url: `${base_url}/assets/`,
     storage_domain: `${base_url}/assets/storage/uploads`,
+    imagemin_out: path.resolve("server/storage/temp/imagemins"),
   },
   bcrypt: { saltRounds: 12 },
 };

@@ -7,8 +7,8 @@ const config = require("config");
 
 const {
   getCategoriesByLevel,
-  uploadFileProduct,
-  removeFileProduct,
+  removeImageNotResize,
+  uploadImageNotResize,
 } = require("../../../helpers/index");
 
 /**
@@ -106,7 +106,7 @@ exports.update = async (req, res, next) => {
 
     // Upload thumbnail
     if (bg) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         bg.path,
         cate_slug,
         bg.originalname,
@@ -117,7 +117,7 @@ exports.update = async (req, res, next) => {
         filename,
       };
 
-      removeFileProduct(
+      removeImageNotResize(
         category.bg && category.bg.filename,
         config.get("app.upload_category_dir")
       );
@@ -125,7 +125,7 @@ exports.update = async (req, res, next) => {
 
     // Upload thumbnail
     if (icon) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         icon.path,
         cate_slug,
         icon.originalname,
@@ -136,14 +136,14 @@ exports.update = async (req, res, next) => {
         filename,
       };
 
-      removeFileProduct(
+      removeImageNotResize(
         category.icon && category.icon.filename,
         config.get("app.upload_category_dir")
       );
     }
     // Upload thumbnail
     if (banner) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         banner.path,
         cate_slug,
         banner.originalname,
@@ -154,7 +154,7 @@ exports.update = async (req, res, next) => {
         filename,
       };
 
-      removeFileProduct(
+      removeImageNotResize(
         category.banner && category.banner.filename,
         config.get("app.upload_category_dir")
       );
@@ -251,7 +251,7 @@ exports.store = async (req, res, next) => {
     });
 
     if (bg) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         bg.path,
         cate_slug,
         bg.originalname,
@@ -263,7 +263,7 @@ exports.store = async (req, res, next) => {
     }
 
     if (icon) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         icon.path,
         cate_slug,
         icon.originalname,
@@ -275,7 +275,7 @@ exports.store = async (req, res, next) => {
     }
 
     if (banner) {
-      const filename = uploadFileProduct(
+      const filename = await uploadImageNotResize(
         banner.path,
         cate_slug,
         banner.originalname,

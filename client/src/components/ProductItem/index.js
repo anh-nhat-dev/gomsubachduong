@@ -2,7 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Skeleton from "react-loading-skeleton";
-import { formatPrice } from "utils";
+import { formatPrice, getImage } from "utils";
+import { sizesImage } from "definitions/config";
 
 import IconPromotion from "assets/img/icon-km.png";
 import { ProductItemWrapper } from "./style";
@@ -26,7 +27,10 @@ const ProductItem = ({
     >
       {product ? (
         <Link className="img-res" to={link}>
-          <img className="img-fluid" src={product?.thumbnail?.url} />
+          <img
+            className="img-fluid"
+            src={getImage(product.thumbnail, sizesImage.small)}
+          />
         </Link>
       ) : (
         <Skeleton height={200} />

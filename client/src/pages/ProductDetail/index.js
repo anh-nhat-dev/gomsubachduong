@@ -14,8 +14,11 @@ import { Link } from "react-router-dom";
 import PhotoGallery from "./PhotoGallery";
 import ProductInfo from "./ProductInfo";
 import ProductTab from "./ProductTab";
-import { ProductDetailWrapper } from "./style";
 import Scroll from "react-scroll";
+import { sizesImage } from "definitions/config";
+import { getImage } from "utils";
+import { ProductDetailWrapper } from "./style";
+
 const scroll = Scroll.animateScroll;
 const ProductDetail = ({ match }) => {
   const { id } = match.params;
@@ -46,20 +49,20 @@ const ProductDetail = ({ match }) => {
   const getPhotos = () => {
     const photos = [];
 
-    if (product?.thumbnail?.url) {
+    if (product?.thumbnail) {
       photos.push({
-        srcSet: product?.thumbnail.url,
-        small: product?.thumbnail.url,
-        large: product?.thumbnail.url,
+        srcSet: getImage(product.thumbnail, sizesImage.large),
+        small: getImage(product.thumbnail, sizesImage.thumbnail),
+        large: getImage(product.thumbnail, sizesImage.full),
       });
     }
 
     if (Array.isArray(product?.photos)) {
       for (const photo of product?.photos) {
         photos.push({
-          srcSet: photo?.url,
-          small: photo?.url,
-          large: photo?.url,
+          srcSet: getImage(photo, sizesImage.large),
+          small: getImage(photo, sizesImage.thumbnail),
+          large: getImage(photo, sizesImage.full),
         });
       }
     }
