@@ -24,6 +24,7 @@ const ProductItem = ({
       tablet={tablet}
       laptop={laptop}
       desktop={desktop}
+      className="p-container"
     >
       {product ? (
         <Link className="img-res" to={link}>
